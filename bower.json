@@ -1,0 +1,19 @@
+{
+  "name": "angular-shared-object",
+  "version": "0.0.1",
+  "homepage": "https://github.com/dam1r89/angular-socket-wrapper",
+  "authors": [
+    "Damir Miladinov <damir89@gmail.com>"
+  ],
+  "description": "",
+  "main": "angular-socket-wrapper.js",
+  "keywords": [
+    "AngularJS",
+    "Socket.io",
+    "Wrapper"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*"
+  ]
+}
