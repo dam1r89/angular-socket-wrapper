@@ -2,17 +2,17 @@
 
 Wrapper for Socket.io
 
-##Using
+##Configuration
 
-angular.module('yourApp', ['AngularSocketWrapper'])
-	.config(function($socketProvider){
+	angular.module('yourApp', ['AngularSocketWrapper'])
+		.config(function($socketProvider){
 
-		$socketProvider.options({
-				port: 8080 // and other socket.io options
-			});
+			$socketProvider.options({
+					port: 8080 // and other socket.io options
+				});
 
-		$socketProvider.host('http://example.com'); // without port number
-	})
+			$socketProvider.host('http://example.com'); // without port number
+		});
 
 
 
