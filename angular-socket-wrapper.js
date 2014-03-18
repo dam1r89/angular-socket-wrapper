@@ -35,26 +35,21 @@ angular.module('SocketWrapper', [])
 
         Socket.prototype = {
             bind: function (scope){
-                var _this = this,
+                var socket = this,
                     origOn, origEmit;
 
                 // pass through already assigned listeners
                 angular.forEach(scope.$$listeners, function(listener, name){
-                    _this.bind(name, listener);
+                    socket.bind(name, listener);
                 });
 
-                origOn = scope.$on;
-                scope.$on = function(name, listener){
-                    _this.$on(name, listener);
-                    origOn.apply(scope, arguments);
-                }
-
-                origEmit = scope.$emit;
-                scope.$emit = function(name, args){
-                    _this.$emit(name, args);
-                    origEmit.apply(scope, arguments);
-                }
-
+                angular.forEach(['$on', '$emit'], function(key){
+                    var fn = scope[key];
+                    scope[key] = function(){
+                        socket[key](name, listener);
+                        fn.apply(scope, arguments);
+                    }
+                });
 
             },
             $on: function(name, listener){

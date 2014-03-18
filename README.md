@@ -4,7 +4,7 @@ Wrapper for Socket.io
 
 ##Configuration
 
-	angular.module('yourApp', ['AngularSocketWrapper'])
+	angular.module('yourApp', ['SocketWrapper'])
 		.config(function($socketProvider){
 
 			$socketProvider.options({
