@@ -8,10 +8,14 @@ Wrapper for Socket.io
 		.config(function($socketProvider){
 
 			$socketProvider.options({
-					port: 8080 // and other socket.io options
-				});
+				port: 8080
+				// ... and other socket.io options
+			});
 
-			$socketProvider.host('http://example.com'); // without port number
+			// without port number
+			// defaults to current host
+			$socketProvider.host('http://example.com');
+
 		});
 
 

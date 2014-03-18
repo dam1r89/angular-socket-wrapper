@@ -1,6 +1,6 @@
 (function(window, angular, io, undefined) {'use strict';
 
-angular.module('AngularSocketWrapper', [])
+angular.module('SocketWrapper', [])
     .provider('$socket', function $socketProvider() {
 
         var options = {
@@ -20,21 +20,22 @@ angular.module('AngularSocketWrapper', [])
 
         this.$get = ['$location', function($location){
 
-            host = host ||  ($location.protocol() + ':\\' + $location.host());
-            return new Socket(options); 
+            host = host || ($location.protocol() + ':\\' + $location.host());
+            return new Socket(options);
 
         }];
 
 
         function Socket(options){
 
-            host = host || defaultHost;
-            this.socket = io.connect(options.host, options);
+            if (!io) return console.error('Socket.io is not found. Did you include script? It should be included before this script.')
+            this.socket = io.connect(host, options);
+
         }
 
         Socket.prototype = {
             bind: function (scope){
-                var _this = this, 
+                var _this = this,
                     origOn, origEmit;
 
                 // pass through already assigned listeners
@@ -42,18 +43,18 @@ angular.module('AngularSocketWrapper', [])
                     _this.bind(name, listener);
                 });
 
-                origOn = scope.$on; 
+                origOn = scope.$on;
                 scope.$on = function(name, listener){
                     _this.$on(name, listener);
                     origOn.apply(scope, arguments);
                 }
 
-                origEmit = scope.$emit; 
+                origEmit = scope.$emit;
                 scope.$emit = function(name, args){
                     _this.$emit(name, args);
                     origEmit.apply(scope, arguments);
                 }
-                
+
 
             },
             $on: function(name, listener){
@@ -65,7 +66,7 @@ angular.module('AngularSocketWrapper', [])
             },
             $send:function(message){
                 this.socket.send(message);
-            } 
+            }
 
         };
 
