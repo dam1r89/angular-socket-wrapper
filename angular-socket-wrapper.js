@@ -21,46 +21,73 @@ angular.module('SocketWrapper', [])
         this.$get = ['$location', function($location){
 
             host = host || ($location.protocol() + ':\\' + $location.host());
-            return new Socket(options);
+            return new SocketWrapper(options);
 
         }];
 
 
-        function Socket(options){
+        function SocketWrapper(options){
 
             if (!io) return console.error('Socket.io is not found. Did you include script? It should be included before this script.')
             this.socket = io.connect(host, options);
 
         }
 
-        Socket.prototype = {
+        SocketWrapper.prototype = {
             bind: function (scope){
-                var socket = this,
-                    origOn, origEmit;
+                var wrapper = this,
+                    socket = wrapper.socket,
+                    socketListeners = [];
 
-                // pass through already assigned listeners
-                angular.forEach(scope.$$listeners, function(listener, name){
-                    socket.bind(name, listener);
+
+                // add listeners for already attached events on scope
+                angular.forEach(scope.$$listeners, function(listeners, name){
+                    angular.forEach(listeners, function(listener){
+                        socketListeners.push({
+                            name: name,
+                            fn: listener
+                        });
+                        socket.on(name, listener);
+                    });
                 });
 
-                angular.forEach(['$on', '$emit'], function(key){
-                    var fn = scope[key];
-                    scope[key] = function(){
-                        socket[key](name, listener);
+                scope.$on('$destroy', removeListeners);
+
+                // override scope methods to catch binidngs
+                angular.forEach(['$on', '$emit'], function(method){
+                    var fn = angular.bind(scope, scope[method]);
+
+                    // scope.$on('$destroy')
+                    scope[method] = function(name, listener){
+
+                        socketListeners.push({
+                            name: name,
+                            fn: listener
+                        });
+                        wrapper[method].call(wrapper, name, listener);
                         fn.apply(scope, arguments);
                     }
                 });
 
+                function removeListeners(){
+                    angular.forEach(socketListeners, function(val){
+                        wrapper.$off(val.name, val.fn);
+                    });
+                }
+
+
+            },
+            $off: function(name, listener){
+
+                this.socket.removeListener(name, listener);
             },
             $on: function(name, listener){
-                // TODO: Check where to put $apply
+
                 this.socket.on(name, listener);
             },
             $emit: function(name, args){
+
                 this.socket.emit(name, args);
-            },
-            $send:function(message){
-                this.socket.send(message);
             }
 
         };

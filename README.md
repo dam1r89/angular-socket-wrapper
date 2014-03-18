@@ -28,11 +28,22 @@ Example:
 
 	$socket.bind($scope);
 
-	$scope.$on('message', function(){
+	$scope.$on('message', function listener(){
 		...
 	});
 
+	listener will be automatically removed when scope is destroyed
 
-`$socket.$on('event', function(data){})`
 
-`$socket.$emit('event', data)`
+If event is added manually it should be unbinded when appropriate.
+
+	var listener = function(data){
+		// ...
+	}
+
+	$socket.$on('event', listener);
+
+	$socket.$emit('event', data);
+
+	$socket.$off('event', listener);
+
