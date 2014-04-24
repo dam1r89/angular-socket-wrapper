@@ -20,7 +20,7 @@ angular.module('SocketWrapper', [])
 
         this.$get = ['$location', function($location){
 
-            host = host || ($location.protocol() + ':\\' + $location.host());
+            host = host || ($location.protocol() + '://' + $location.host());
             return new SocketWrapper(options);
 
         }];

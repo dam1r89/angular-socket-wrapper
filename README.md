@@ -32,7 +32,7 @@ Example:
 		...
 	});
 
-	listener will be automatically removed when scope is destroyed
+Listener will be automatically removed when scope is destroyed.
 
 
 If event is added manually it should be unbinded when appropriate.
