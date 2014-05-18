@@ -1,6 +1,4 @@
-io = window.io = {};
 describe('Testing wrapper', function() {
-
 
     var $socket,
         ioSocket = {
