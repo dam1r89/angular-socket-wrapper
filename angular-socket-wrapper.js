@@ -9,6 +9,9 @@ angular.module('SocketWrapper', [])
         },
         host;
 
+        this._io = function(_io){
+            io = _io;
+        }
 
         this.options = function(_options){
             angular.extend(options, _options);

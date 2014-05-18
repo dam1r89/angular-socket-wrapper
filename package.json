@@ -1,0 +1,30 @@
+{
+  "name": "angular-socket-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper around socket.io",
+  "main": "angular-socket-wrapper.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "karma-jasmine": "~0.2.0",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-safari-launcher": "~0.1.1",
+    "karma": "~0.12.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dam1r89/angular-socket-wrapper.git"
+  },
+  "author": "Damir Miladinov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dam1r89/angular-socket-wrapper/issues"
+  },
+  "homepage": "https://github.com/dam1r89/angular-socket-wrapper"
+}

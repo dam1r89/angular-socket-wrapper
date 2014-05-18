@@ -12,6 +12,16 @@
     "Socket.io",
     "Wrapper"
   ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.16",
+    "angular-mocks": "~1.2.16"
+  },
   "license": "MIT",
   "ignore": [
     "**/.*"
